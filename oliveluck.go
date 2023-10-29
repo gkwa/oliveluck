@@ -17,12 +17,29 @@ import (
 func Main() int {
 	slog.Debug("oliveluck", "test", true)
 
-	namer := GetRandNamer()
-	for _, name := range GenRandomNames(namer, 10) {
-		fmt.Fprintf(os.Stdout, "%s\n", name)
-	}
+	test1()
+	// test2()
 
 	return 0
+}
+
+func test2() {
+	namer := GetRandNamer()
+	names := GenRandomNames(namer, 1)
+	slog.Debug("debug", "name", names[0])
+}
+
+func test1() {
+	i := 0
+	for i < 10 {
+		namer := GetRandNamer()
+		names := GenRandomNames(namer, 1)
+		for _, name := range names {
+			slog.Debug("debug", "name", name)
+			fmt.Fprintf(os.Stdout, "%s\n", name)
+		}
+		i++
+	}
 }
 
 var (
@@ -50,7 +67,7 @@ func init() {
 
 func GenRandomNames(namer Namer, maxNames int) []string {
 	seen := make(map[string]string)
-	names := make([]string, maxNames)
+	names := make([]string, 0, maxNames)
 
 	for count := 0; count < maxNames; {
 		name := namer.GetName()
@@ -61,7 +78,9 @@ func GenRandomNames(namer Namer, maxNames int) []string {
 		}
 
 		names = append(names, name)
+
 		count++
+		seen[name] = name
 	}
 
 	return names
