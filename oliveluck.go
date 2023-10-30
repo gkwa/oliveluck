@@ -90,7 +90,16 @@ type Combo1 struct{}
 
 func (spn *Combo1) GetName() string {
 	noun := gofakeit.NounAbstract()
-	adjective := gofakeit.SafeColor()
+
+	color := "blue"
+	for {
+		color := gofakeit.SafeColor()
+		if color != "black" {
+			break
+		}
+	}
+
+	adjective := color
 
 	return clean(noun, adjective)
 }
