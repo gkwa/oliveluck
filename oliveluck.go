@@ -32,12 +32,13 @@ func clean(str1, str2 string) string {
 }
 
 func filteredColor() string {
-	color := "blue"
+	color := gofakeit.SafeColor()
 	for {
-		color = gofakeit.SafeColor()
 		if color != "black" {
 			break
 		}
+
+		color = gofakeit.SafeColor()
 	}
 
 	return color
