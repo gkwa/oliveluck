@@ -20,30 +20,6 @@ var (
 	funcSlice  = []func() string{}
 )
 
-func cleanAndCombine(f1, f2 func() string) string {
-	return clean(f1(), f2())
-}
-
-func clean(str1, str2 string) string {
-	r := strings.ToLower(str2 + str1)
-	str := regexp.MustCompile(`[^a-zA-Z0-9]+`).ReplaceAllString(r, "")
-
-	return str
-}
-
-func filteredColor() string {
-	color := gofakeit.SafeColor()
-	for {
-		if color != "black" {
-			break
-		}
-
-		color = gofakeit.SafeColor()
-	}
-
-	return color
-}
-
 func init() {
 	randSource = rand.NewSource(time.Now().UnixNano())
 	rng = rand.New(randSource)
@@ -92,6 +68,30 @@ func Main() int {
 	return 0
 }
 
+func cleanAndCombine(f1, f2 func() string) string {
+	return clean(f1(), f2())
+}
+
+func clean(str1, str2 string) string {
+	r := strings.ToLower(str2 + str1)
+	str := regexp.MustCompile(`[^a-zA-Z0-9]+`).ReplaceAllString(r, "")
+
+	return str
+}
+
+func filteredColor() string {
+	color := gofakeit.SafeColor()
+	for {
+		if color != "black" {
+			break
+		}
+
+		color = gofakeit.SafeColor()
+	}
+
+	return color
+}
+
 func test1() {
 	i := 0
 	for i < 10 {
@@ -111,6 +111,7 @@ func GenRandomNames(namer func() string, maxNames int) []string {
 
 	for count := 0; count < maxNames; {
 		name := namer()
+
 		_, found := seen[name]
 
 		if found {
