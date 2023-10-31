@@ -31,12 +31,11 @@ func clean(str1, str2 string) string {
 	return str
 }
 
-func getColor() string {
+func filteredColor() string {
 	color := "blue"
 	for {
-		newColor := gofakeit.SafeColor()
+		color = gofakeit.SafeColor()
 		if color != "black" {
-			color = newColor
 			break
 		}
 	}
@@ -50,10 +49,6 @@ func init() {
 
 	funcSlice = []func() string{
 		func() string {
-			color := getColor()
-			return clean(gofakeit.NounAbstract(), color)
-		},
-		func() string {
 			str1, err := sententia.Make("{{ noun }}")
 			if err != nil {
 				panic(err)
@@ -65,6 +60,7 @@ func init() {
 			}
 			return clean(str1, str2)
 		},
+		func() string { return cleanAndCombine(gofakeit.NounAbstract, filteredColor) },
 		func() string { return cleanAndCombine(gofakeit.Animal, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BeerName, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BeerStyle, gofakeit.Adjective) },
