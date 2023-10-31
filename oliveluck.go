@@ -20,21 +20,37 @@ var (
 	funcSlice  = []func() string{}
 )
 
+func cleanAndCombine(f1, f2 func() string) string {
+	return clean(f1(), f2())
+}
+
+func clean(str1, str2 string) string {
+	r := strings.ToLower(str2 + str1)
+	str := regexp.MustCompile(`[^a-zA-Z0-9]+`).ReplaceAllString(r, "")
+
+	return str
+}
+
+func getColor() string {
+	color := "blue"
+	for {
+		newColor := gofakeit.SafeColor()
+		if color != "black" {
+			color = newColor
+			break
+		}
+	}
+
+	return color
+}
+
 func init() {
 	randSource = rand.NewSource(time.Now().UnixNano())
 	rng = rand.New(randSource)
 
 	funcSlice = []func() string{
 		func() string {
-			color := "AAAA"
-			for {
-				newColor := gofakeit.SafeColor()
-				if color != "black" {
-					color = newColor
-					break
-				}
-			}
-
+			color := getColor()
 			return clean(gofakeit.NounAbstract(), color)
 		},
 		func() string {
@@ -49,15 +65,30 @@ func init() {
 			}
 			return clean(str1, str2)
 		},
-		func() string { return clean(gofakeit.Animal(), gofakeit.Adjective()) },
-		func() string { return clean(gofakeit.BeerName(), gofakeit.Adjective()) },
-		func() string { return clean(gofakeit.CarMaker(), gofakeit.Adjective()) },
-		func() string { return clean(gofakeit.HackerNoun(), gofakeit.Adjective()) },
-		func() string { return clean(gofakeit.Hobby(), gofakeit.Adjective()) },
-		func() string { return clean(gofakeit.JobTitle(), gofakeit.Adjective()) },
-		func() string { return clean(gofakeit.NounAbstract(), gofakeit.HackerAdjective()) },
-		func() string { return clean(gofakeit.State(), gofakeit.Adjective()) },
-		func() string { return clean(randomdata.Noun(), randomdata.Adjective()) },
+		func() string { return cleanAndCombine(gofakeit.Animal, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.BeerName, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.CarMaker, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.HackerNoun, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Hobby, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.JobTitle, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.NounAbstract, gofakeit.HackerAdjective) },
+		func() string { return cleanAndCombine(gofakeit.State, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(randomdata.Noun, randomdata.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.BeerStyle, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.BeerYeast, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.CarModel, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.CarType, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.BuzzWord, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.JobLevel, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.JobTitle, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Fruit, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Vegetable, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.HackerAdjective, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.HackerVerb, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.HackerNoun, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Language, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Gender, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Hobby, gofakeit.Adjective) },
 	}
 }
 
@@ -103,13 +134,6 @@ func GenRandomNames(namer func() string, maxNames int) []string {
 
 func GetRandNamer() func() string {
 	rand := rng.Intn(len(funcSlice))
-	
+
 	return funcSlice[rand]
-}
-
-func clean(str1, str2 string) string {
-	r := strings.ToLower(str2 + str1)
-	str := regexp.MustCompile(`[^a-zA-Z0-9]+`).ReplaceAllString(r, "")
-
-	return str
 }
