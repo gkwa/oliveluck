@@ -14,19 +14,57 @@ import (
 	"github.com/castillobgr/sententia"
 )
 
-func Main() int {
-	slog.Debug("oliveluck", "test", true)
+var (
+	randSource rand.Source
+	rng        *rand.Rand
+	funcSlice  = []func() string{}
+)
 
-	test1()
-	// test2()
+func init() {
+	randSource = rand.NewSource(time.Now().UnixNano())
+	rng = rand.New(randSource)
 
-	return 0
+	funcSlice = []func() string{
+		func() string {
+			color := "AAAA"
+			for {
+				newColor := gofakeit.SafeColor()
+				if color != "black" {
+					color = newColor
+					break
+				}
+			}
+
+			return clean(gofakeit.NounAbstract(), color)
+		},
+		func() string {
+			str1, err := sententia.Make("{{ noun }}")
+			if err != nil {
+				panic(err)
+			}
+
+			str2, err := sententia.Make("{{ adjective }}")
+			if err != nil {
+				panic(err)
+			}
+			return clean(str1, str2)
+		},
+		func() string { return clean(gofakeit.Animal(), gofakeit.Adjective()) },
+		func() string { return clean(gofakeit.BeerName(), gofakeit.Adjective()) },
+		func() string { return clean(gofakeit.CarMaker(), gofakeit.Adjective()) },
+		func() string { return clean(gofakeit.HackerNoun(), gofakeit.Adjective()) },
+		func() string { return clean(gofakeit.Hobby(), gofakeit.Adjective()) },
+		func() string { return clean(gofakeit.JobTitle(), gofakeit.Adjective()) },
+		func() string { return clean(gofakeit.NounAbstract(), gofakeit.HackerAdjective()) },
+		func() string { return clean(gofakeit.State(), gofakeit.Adjective()) },
+		func() string { return clean(randomdata.Noun(), randomdata.Adjective()) },
+	}
 }
 
-func test2() {
-	namer := GetRandNamer()
-	names := GenRandomNames(namer, 1)
-	slog.Debug("debug", "name", names[0])
+func Main() int {
+	test1()
+
+	return 0
 }
 
 func test1() {
@@ -42,35 +80,12 @@ func test1() {
 	}
 }
 
-var (
-	randSource rand.Source
-	rng        *rand.Rand
-
-	Namers = []Namer{
-		&SententiaPathNamer{},
-		&RandomdataPathNamer{},
-		&GofakeitPathNamer{},
-		&Combo1{},
-		&Combo2{},
-		&Combo4{},
-		&Combo5{},
-		&Combo6{},
-		&Combo7{},
-		&Combo8{},
-	}
-)
-
-func init() {
-	randSource = rand.NewSource(time.Now().UnixNano())
-	rng = rand.New(randSource)
-}
-
-func GenRandomNames(namer Namer, maxNames int) []string {
+func GenRandomNames(namer func() string, maxNames int) []string {
 	seen := make(map[string]string)
 	names := make([]string, 0, maxNames)
 
 	for count := 0; count < maxNames; {
-		name := namer.GetName()
+		name := namer()
 		_, found := seen[name]
 
 		if found {
@@ -86,138 +101,15 @@ func GenRandomNames(namer Namer, maxNames int) []string {
 	return names
 }
 
-type Combo1 struct{}
-
-func (spn *Combo1) GetName() string {
-	noun := gofakeit.NounAbstract()
-
-	color := "blue"
-	for {
-		color := gofakeit.SafeColor()
-		if color != "black" {
-			break
-		}
-	}
-
-	adjective := color
-
-	return clean(noun, adjective)
-}
-
-type Combo2 struct{}
-
-func (spn *Combo2) GetName() string {
-	noun := gofakeit.State()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-type Combo3 struct{}
-
-func (spn *Combo3) GetName() string {
-	noun := gofakeit.Hobby()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-type Combo4 struct{}
-
-func (spn *Combo4) GetName() string {
-	noun := gofakeit.BeerName()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-type Combo5 struct{}
-
-func (spn *Combo5) GetName() string {
-	noun := gofakeit.CarMaker()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-type Combo7 struct{}
-
-func (spn *Combo7) GetName() string {
-	noun := gofakeit.HackerNoun()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-type Combo8 struct{}
-
-func (spn *Combo8) GetName() string {
-	noun := gofakeit.Animal()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-type Combo6 struct{}
-
-func (spn *Combo6) GetName() string {
-	noun := gofakeit.JobTitle()
-	adjective := gofakeit.Adjective()
-
-	return clean(noun, adjective)
-}
-
-func GetRandNamer() Namer {
-	rand := rng.Intn(len(Namers))
-	pathNamer := Namers[rand]
-	return pathNamer
-}
-
-type GofakeitPathNamer struct{}
-
-func (spn *GofakeitPathNamer) GetName() string {
-	noun := gofakeit.NounAbstract()
-	adjective := gofakeit.HackerAdjective()
-
-	return clean(noun, adjective)
-}
-
-type SententiaPathNamer struct{}
-
-func (spn *SententiaPathNamer) GetName() string {
-	str1, err := sententia.Make("{{ noun }}")
-	if err != nil {
-		panic(err)
-	}
-
-	str2, err := sententia.Make("{{ adjective }}")
-	if err != nil {
-		panic(err)
-	}
-
-	return clean(str1, str2)
-}
-
-func init() {
-	randSource = rand.NewSource(time.Now().UnixNano())
-	rng = rand.New(randSource)
+func GetRandNamer() func() string {
+	rand := rng.Intn(len(funcSlice))
+	
+	return funcSlice[rand]
 }
 
 func clean(str1, str2 string) string {
 	r := strings.ToLower(str2 + str1)
 	str := regexp.MustCompile(`[^a-zA-Z0-9]+`).ReplaceAllString(r, "")
+
 	return str
-}
-
-type Namer interface {
-	GetName() string
-}
-
-type RandomdataPathNamer struct{}
-
-func (rpn *RandomdataPathNamer) GetName() string {
-	noun := randomdata.Noun()
-	adjective := randomdata.Adjective()
-
-	return clean(noun, adjective)
 }
