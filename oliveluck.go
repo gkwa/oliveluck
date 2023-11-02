@@ -37,7 +37,6 @@ func init() {
 			}
 			return clean(str1, str2)
 		},
-		func() string { return cleanAndCombine(gofakeit.NounAbstract, filteredColor) },
 		func() string { return cleanAndCombine(gofakeit.Animal, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BeerName, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BeerStyle, gofakeit.Adjective) },
@@ -55,9 +54,16 @@ func init() {
 		func() string { return cleanAndCombine(gofakeit.JobLevel, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.JobTitle, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Language, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.NounAbstract, filteredColor) },
 		func() string { return cleanAndCombine(gofakeit.NounAbstract, gofakeit.HackerAdjective) },
+		func() string { return cleanAndCombine(gofakeit.Pronoun, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.State, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Vegetable, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.Adverb) },
+		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.AdverbDegree) },
+		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.AdverbFrequencyDefinite) },
+		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.AdverbManner) },
+		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.AdverbPlace) },
 		func() string { return cleanAndCombine(randomdata.Noun, randomdata.Adjective) },
 	}
 }
