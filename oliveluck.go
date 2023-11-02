@@ -40,6 +40,7 @@ func init() {
 		func() string { return cleanAndCombine(gofakeit.BeerName, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BeerStyle, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BeerYeast, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Bird, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.BuzzWord, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.CarMaker, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.CarModel, gofakeit.Adjective) },
