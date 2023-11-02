@@ -2,7 +2,6 @@ package oliveluck
 
 import (
 	"fmt"
-	"log/slog"
 	"math/rand"
 	"os"
 	"regexp"
@@ -45,19 +44,26 @@ func init() {
 		func() string { return cleanAndCombine(gofakeit.CarMaker, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.CarModel, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.CarType, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.FarmAnimal, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Fruit, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Gender, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.HackerAdjective, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.HackerNoun, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.HackerVerb, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Hobby, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.Hobby, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.JobLevel, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.JobTitle, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Language, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.MonthString, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.MovieGenre, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.NounAbstract, filteredColor) },
 		func() string { return cleanAndCombine(gofakeit.NounAbstract, gofakeit.HackerAdjective) },
+		func() string { return cleanAndCombine(gofakeit.PetName, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Pronoun, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.State, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.StreetPrefix, gofakeit.Adjective) },
+		func() string { return cleanAndCombine(gofakeit.StreetSuffix, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Vegetable, gofakeit.Adjective) },
 		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.Adverb) },
 		func() string { return cleanAndCombine(gofakeit.Verb, gofakeit.AdverbDegree) },
@@ -104,7 +110,6 @@ func test1() {
 		namer := GetRandNamer()
 		names := GenRandomNames(namer, 1)
 		for _, name := range names {
-			slog.Debug("debug", "name", name)
 			fmt.Fprintf(os.Stdout, "%s\n", name)
 		}
 		i++
