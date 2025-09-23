@@ -14,6 +14,7 @@ github.com/brianvoe/gofakeit/v7 v7.5.1/go.mod h1:QXuPeBw164PJCzCUZVmgpgHJ3Llj49j
 github.com/brianvoe/gofakeit/v7 v7.6.0/go.mod h1:QXuPeBw164PJCzCUZVmgpgHJ3Llj49jSLVkKPMtxtxA=
 github.com/brianvoe/gofakeit/v7 v7.7.0/go.mod h1:QXuPeBw164PJCzCUZVmgpgHJ3Llj49jSLVkKPMtxtxA=
 github.com/brianvoe/gofakeit/v7 v7.7.1/go.mod h1:QXuPeBw164PJCzCUZVmgpgHJ3Llj49jSLVkKPMtxtxA=
+github.com/brianvoe/gofakeit/v7 v7.7.2/go.mod h1:QXuPeBw164PJCzCUZVmgpgHJ3Llj49jSLVkKPMtxtxA=
 github.com/castillobgr/sententia v0.0.0-20160918013314-9b04b4a53625 h1:Ugko3eNWFwfsNeAIKHDI7b0FoogDqfzjXEPpu3j9BOg=
 github.com/castillobgr/sententia v0.0.0-20160918013314-9b04b4a53625/go.mod h1:DB52HSbXAIbrBlplIJbo4RRPOxb6ognkg4iki474Zp4=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
