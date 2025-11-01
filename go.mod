@@ -6,8 +6,8 @@ toolchain go1.25.3
 
 require (
 	github.com/Pallinder/go-randomdata v1.2.0
-	github.com/brianvoe/gofakeit/v7 v7.8.1
-	github.com/brianvoe/gofakeit/v7 v7.8.1
+	github.com/brianvoe/gofakeit/v6 v6.28.0
+	github.com/brianvoe/gofakeit/v7 v7.8.2
 	github.com/castillobgr/sententia v0.0.0-20160918013314-9b04b4a53625
 	github.com/taylormonacelli/goldbug v0.0.6
 )
